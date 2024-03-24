@@ -71,42 +71,43 @@ var transporter = nodemailer.createTransport({
     },
 })
 
-router.post('/resetarsenha',(req,res) => {
+router.post('/resetarsenha', (req, res) => {
     const user = req.body;
     query = "select email, password from user where email=?";
-    connection.query(query,[user.email], (err,results) =>{
-        if(!err){
-            if(results.length <= 0){
-                return res.status(200).json({message: "Senha enviada com sucesso para o seu e-mail."});
+    connection.query(query, [user.email], (err, results) => {
+        if (!err) {
+            if (results.length <= 0) {
+                return res.status(200).json({ message: "Senha enviada com sucesso para o seu e-mail." });
             }
-            else { 
+            else {
                 var mailOptions = {
                     from: process.env.EMAIL,
                     to: results[0].email,
                     subject: 'Senha do Planeta Nordeste',
-                    html: '<p><b>Suas credenciais</b><br><b>Email:</b>'+ results[0].email +'<br><b>Senha:</b>' + results[0].password + '<br><a href="https://planetanordeste.com.br" target="_blank">Clique aqui para fazer login</a></p>'
+                    html: '<p><b>Suas credenciais</b><br><b>Email:</b>' + results[0].email + '<br><b>Senha:</b>' + results[0].password + '<br><a href="https://planetanordeste.com.br" target="_blank">Clique aqui para fazer login</a></p>'
                 };
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
                         console.log(error);
                     }
                     else {
                         console.log('E-mail enviado:' + info.response);
                     }
                 }
-            )};
-            return res.status(200).json({message: "Senha enviada com sucesso para o seu e-mail"});
+                )
+            };
+            return res.status(200).json({ message: "Senha enviada com sucesso para o seu e-mail" });
         }
         else {
             return res.status(500).json(err);
         }
-    }) 
+    })
 })
 
-router.get('/get',auth.authenticateToken,(req,res) => {
+router.get('/get', auth.authenticateToken, checkRole.checkRole, (req, res) => {
     var query = "select id, login, email, password from user where role='cliente'";
-    connection.query(query,(err,results) => {
-        if(!err){
+    connection.query(query, (err, results) => {
+        if (!err) {
             return res.status(200).json(results);
         }
         else {
@@ -115,15 +116,15 @@ router.get('/get',auth.authenticateToken,(req,res) => {
     })
 })
 
-router.patch('/update',auth.authenticateToken,(req, res) => {
+router.patch('/update', auth.authenticateToken, (req, res) => {
     let user = req.body;
     var query = "update user set status=? where id=?";
-    connection.query(query,[user.status, user.id],(err,results)=>{
-        if(!err){
-            if(results.affectedRows == 0){
-                return res.status(404).json({message: "Usuário não existe."});
+    connection.query(query, [user.status, user.id], (err, results) => {
+        if (!err) {
+            if (results.affectedRows == 0) {
+                return res.status(404).json({ message: "Usuário não existe." });
             }
-            return res.status(200).json({message: "Usuário alterado com sucesso."})
+            return res.status(200).json({ message: "Usuário alterado com sucesso." })
         }
         else {
             return res.status(500).json(err);
@@ -131,12 +132,39 @@ router.patch('/update',auth.authenticateToken,(req, res) => {
     })
 })
 
-router.get('/checkToken',auth.authenticateToken,(req,res)=>{
-    return res.status(200).json({message: "true"});
+router.get('/checkToken', auth.authenticateToken, (req, res) => {
+    return res.status(200).json({ message: "true" });
 })
 
-router.post('/mudarSenha',(req,res) => {
+router.post('/mudarSenha', auth.authenticateToken,(req, res) => {
+    const user = req.body;
+    const email = res.locals.email;
+    var query = "select * from user where email=? and password=?";
+
+    connection.query(query, [email, user.oldPassword], (err, results) => {
+        if (!err) {
+            if (results.length <= 0) {
+                return res.status(400).json({ message: "Senha antiga está incorreta." });
+            }
+            else if (results[0].password == user.oldPassword) {
+                query = "update user set password=? where email=?";
+                connection.query(query, [user.newPassword, email], (err, results) => {
+                    if (!err) {
+                        return res.status(200).json({ message: "Senha atualizada com sucesso." });
+                    }
+                    else {  
+                        return res.status(500).json(err);
+                    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                })
+            }
+            else {
+                return res.status(400).json({ message: "Algo deu errado. Tente novamente." })
+            }
+        }
+        else {
+            return res.status(500).json(err);
+        }
+    })
+})
     
-})
-
 module.exports = router;
