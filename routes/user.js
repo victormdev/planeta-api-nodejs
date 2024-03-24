@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 require('dotenv').config();
+var auth = require('../services/authentication');
+var checkRole = require('../services/checkRole');
 
 router.post('/signup', (req, res) => {
     let user = req.body;
@@ -101,7 +103,7 @@ router.post('/resetarsenha',(req,res) => {
     }) 
 })
 
-router.get('/get',(req,res) => {
+router.get('/get',auth.authenticateToken,(req,res) => {
     var query = "select id, login, email, password from user where role='cliente'";
     connection.query(query,(err,results) => {
         if(!err){
@@ -113,7 +115,7 @@ router.get('/get',(req,res) => {
     })
 })
 
-router.patch('/update',(req, res) => {
+router.patch('/update',auth.authenticateToken,(req, res) => {
     let user = req.body;
     var query = "update user set status=? where id=?";
     connection.query(query,[user.status, user.id],(err,results)=>{
@@ -129,7 +131,7 @@ router.patch('/update',(req, res) => {
     })
 })
 
-router.get('/checkToken',(req,res)=>{
+router.get('/checkToken',auth.authenticateToken,(req,res)=>{
     return res.status(200).json({message: "true"});
 })
 
