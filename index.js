@@ -6,10 +6,13 @@ const authRoutes = require('./routes/auth');
 
 const errorController = require('./controllers/error');
 
+const cors = require('cors');
+
 const app = express();
 
 const ports = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use((req, res, next) =>{
