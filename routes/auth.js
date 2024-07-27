@@ -90,4 +90,6 @@ router.post(
 
 router.get('/user/:userId', authController.getUserDetails);
 
+router.get('/user-pj/:userId', authController.getUserPJDetails);
+
 module.exports = router;
