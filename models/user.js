@@ -36,15 +36,23 @@ module.exports = class User {
     return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
   }
   
-  
-  static getUserDetails(user_id) {
-    return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
+  static insertUserPJDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) {
+    return db.execute(
+      'INSERT INTO user_pj (user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site]
+    );
   }
   
-  
-
-  static getUserDetails(user_id) {
-    return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
+  static updateUserPJDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) {
+    return db.execute(
+      'UPDATE user_pj SET pessoa_juridica = ?, razao_social = ?, cnpj = ?, inscricao_municipal = ?, nome_completo = ?, rg = ?, cpf = ?, estado_civil = ?, data_nascimento = ?, rua = ?, cidade = ?, estado = ?, pais = ?, cep = ?, celular_1 = ?, celular_2 = ?, telefone = ?, email = ?, instagram = ?, facebook = ?, tiktok = ?, kwai = ?, site = ? WHERE user_id = ?',
+      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site, user_id]
+    );
   }
+  
+  static getUserPJDetails(user_id) {
+    return db.execute('SELECT * FROM user_pj WHERE user_id = ?', [user_id]);
+  }
+  
 
 };
