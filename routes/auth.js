@@ -60,10 +60,6 @@ router.post(
   '/save-user-pj-details',
   [
     body('user_id').isInt(),
-    body('pessoa_juridica').trim().not().isEmpty(),
-    body('razao_social').trim().not().isEmpty(),
-    body('cnpj').trim(),
-    body('inscricao_municipal').trim().not().isEmpty(),
     body('nome_completo').trim().not().isEmpty(),
     body('rg').trim(),
     body('cpf').trim(),
@@ -82,7 +78,6 @@ router.post(
     body('facebook').trim().not().isEmpty(),
     body('tiktok').trim().not().isEmpty(),
     body('kwai').trim().not().isEmpty(),
-    body('site').trim().not().isEmpty(),
   ],
   authController.saveUserPJDetails
 );

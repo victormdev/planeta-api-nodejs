@@ -140,10 +140,6 @@ exports.saveDetails = async (req, res, next) => {
       if (existingUser.length > 0) {
         await User.updateUserPJDetails(
           userDetails.user_id,
-          userDetails.pessoa_juridica,
-          userDetails.razao_social,
-          userDetails.cnpj,
-          userDetails.inscricao_municipal,
           userDetails.nome_completo,
           userDetails.rg,
           userDetails.cpf,
@@ -161,17 +157,12 @@ exports.saveDetails = async (req, res, next) => {
           userDetails.instagram,
           userDetails.facebook,
           userDetails.tiktok,
-          userDetails.kwai,
-          userDetails.site
+          userDetails.kwai
         );
         res.status(200).json({ message: 'User PJ details updated successfully.' });
       } else {
         await User.insertUserPJDetails(
           userDetails.user_id,
-          userDetails.pessoa_juridica,
-          userDetails.razao_social,
-          userDetails.cnpj,
-          userDetails.inscricao_municipal,
           userDetails.nome_completo,
           userDetails.rg,
           userDetails.cpf,
@@ -189,8 +180,7 @@ exports.saveDetails = async (req, res, next) => {
           userDetails.instagram,
           userDetails.facebook,
           userDetails.tiktok,
-          userDetails.kwai,
-          userDetails.site
+          userDetails.kwai
         );
         res.status(201).json({ message: 'User PJ details saved successfully.' });
       }

@@ -28,7 +28,7 @@ module.exports = class User {
   static updateDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site) {
     return db.execute(
       'UPDATE user_pf SET pessoa_juridica = ?, razao_social = ?, cnpj = ?, inscricao_municipal = ?, nome_completo = ?, rg = ?, cpf = ?, rua = ?, cidade = ?, estado = ?, pais = ?, cep = ?, celular_1 = ?, celular_2 = ?, telefone = ?, email = ?, instagram = ?, facebook = ?, site = ? WHERE user_id = ?',
-      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site, user_id]
+      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, user_id]
     );
   }
   
@@ -36,17 +36,17 @@ module.exports = class User {
     return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
   }
   
-  static insertUserPJDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) {
+  static insertUserPJDetails(user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) {
     return db.execute(
-      'INSERT INTO user_pj (user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site]
+      'INSERT INTO user_pj (user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai]
     );
   }
   
-  static updateUserPJDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site) {
+  static updateUserPJDetails(user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) {
     return db.execute(
-      'UPDATE user_pj SET pessoa_juridica = ?, razao_social = ?, cnpj = ?, inscricao_municipal = ?, nome_completo = ?, rg = ?, cpf = ?, estado_civil = ?, data_nascimento = ?, rua = ?, cidade = ?, estado = ?, pais = ?, cep = ?, celular_1 = ?, celular_2 = ?, telefone = ?, email = ?, instagram = ?, facebook = ?, tiktok = ?, kwai = ?, site = ? WHERE user_id = ?',
-      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, site, user_id]
+      'UPDATE user_pj SET nome_completo = ?, rg = ?, cpf = ?, estado_civil = ?, data_nascimento = ?, rua = ?, cidade = ?, estado = ?, pais = ?, cep = ?, celular_1 = ?, celular_2 = ?, telefone = ?, email = ?, instagram = ?, facebook = ?, tiktok = ?, kwai = ? WHERE user_id = ?',
+      [nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai, user_id]
     );
   }
   
