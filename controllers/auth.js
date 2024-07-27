@@ -79,7 +79,7 @@ exports.saveDetails = async (req, res, next) => {
       const [existingUser] = await User.getUserDetails(userDetails.user_id);
   
       if (existingUser.length > 0) {
-        await User.saveDetails(
+        await User.updateDetails(
           userDetails.user_id,
           userDetails.pessoa_juridica,
           userDetails.razao_social,
@@ -131,6 +131,7 @@ exports.saveDetails = async (req, res, next) => {
       next(error);
     }
   };
+  
   
 
   exports.getUserDetails = (req, res, next) => {

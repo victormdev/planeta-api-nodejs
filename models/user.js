@@ -18,7 +18,7 @@ module.exports = class User {
     );
   }
 
-  static saveDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site) {
+  static insertDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site) {
     return db.execute(
       'INSERT INTO user_pf (user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site]
@@ -31,6 +31,11 @@ module.exports = class User {
       [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site, user_id]
     );
   }
+  
+  static getUserDetails(user_id) {
+    return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
+  }
+  
   
   static getUserDetails(user_id) {
     return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
