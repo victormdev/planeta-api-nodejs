@@ -69,4 +69,38 @@ exports.login = async (req, res, next) => {
         }
         next(err);
     }
+
+    
 }
+
+exports.saveDetails = async (req, res, next) => {
+    try {
+      const userDetails = req.body;
+      await User.saveDetails(
+        userDetails.user_id,
+        userDetails.pessoa_juridica,
+        userDetails.razao_social,
+        userDetails.cnpj,
+        userDetails.inscricao_municipal,
+        userDetails.nome_completo,
+        userDetails.rg,
+        userDetails.cpf,
+        userDetails.rua,
+        userDetails.cidade,
+        userDetails.estado,
+        userDetails.pais,
+        userDetails.cep,
+        userDetails.celular_1,
+        userDetails.celular_2,
+        userDetails.telefone,
+        userDetails.email,
+        userDetails.instagram,
+        userDetails.facebook,
+        userDetails.site
+      );
+      res.status(201).json({ message: 'User details saved successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  };
+  

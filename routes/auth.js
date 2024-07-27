@@ -29,5 +29,32 @@ router.post(
 
 router.post('/login', authController.login);
 
+router.post(
+  '/save-details',
+  [
+    body('user_id').isInt(),
+    body('pessoa_juridica').trim().not().isEmpty(),
+    body('razao_social').trim().not().isEmpty(),
+    body('cnpj').trim(),
+    body('inscricao_municipal').trim().not().isEmpty(),
+    body('nome_completo').trim().not().isEmpty(),
+    body('rg').trim(),
+    body('cpf').trim(),
+    body('rua').trim().not().isEmpty(),
+    body('cidade').trim().not().isEmpty(),
+    body('estado').trim().not().isEmpty(),
+    body('pais').trim().not().isEmpty(),
+    body('cep').trim(),
+    body('celular_1').trim(),
+    body('celular_2').trim(),
+    body('telefone').trim(),
+    body('email').isEmail().normalizeEmail(),
+    body('instagram').trim().not().isEmpty(),
+    body('facebook').trim().not().isEmpty(),
+    body('site').trim().not().isEmpty(),
+  ],
+  authController.saveDetails
+);
+
 
 module.exports = router;
