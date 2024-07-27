@@ -132,6 +132,7 @@ exports.saveDetails = async (req, res, next) => {
     }
   };
   
+  
   exports.saveUserPJDetails = async (req, res, next) => {
     try {
       const userDetails = req.body;
