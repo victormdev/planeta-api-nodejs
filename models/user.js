@@ -24,4 +24,9 @@ module.exports = class User {
       [user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site]
     );
   }
+
+  static getUserDetails(user_id) {
+    return db.execute('SELECT * FROM user_pf WHERE user_id = ?', [user_id]);
+  }
+  
 };

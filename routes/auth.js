@@ -56,5 +56,6 @@ router.post(
   authController.saveDetails
 );
 
+router.get('/user/:userId', authController.getUserDetails);
 
 module.exports = router;

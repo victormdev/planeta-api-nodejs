@@ -103,4 +103,16 @@ exports.saveDetails = async (req, res, next) => {
       next(error);
     }
   };
+
+  exports.getUserDetails = (req, res, next) => {
+    const userId = req.params.userId;
+    User.getUserDetails(userId)
+      .then(([rows]) => {
+        res.status(200).json(rows[0]);
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'Erro ao buscar detalhes do usuário', error: err });
+      });
+  };
+  
   
