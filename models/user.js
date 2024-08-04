@@ -38,7 +38,7 @@ module.exports = class User {
   
   static insertUserPJDetails(user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) {
     return db.execute(
-      'INSERT INTO user_pj (user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO user_pj (user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [user_id, nome_completo, rg, cpf, estado_civil, data_nascimento, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, tiktok, kwai]
     );
   }
