@@ -28,7 +28,7 @@ module.exports = class User {
   static updateDetails(user_id, pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, site) {
     return db.execute(
       'UPDATE user_pf SET pessoa_juridica = ?, razao_social = ?, cnpj = ?, inscricao_municipal = ?, nome_completo = ?, rg = ?, cpf = ?, rua = ?, cidade = ?, estado = ?, pais = ?, cep = ?, celular_1 = ?, celular_2 = ?, telefone = ?, email = ?, instagram = ?, facebook = ?, site = ? WHERE user_id = ?',
-      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, user_id]
+      [pessoa_juridica, razao_social, cnpj, inscricao_municipal, nome_completo, rg, cpf, rua, cidade, estado, pais, cep, celular_1, celular_2, telefone, email, instagram, facebook, user_id, site]
     );
   }
   
