@@ -136,7 +136,9 @@ exports.saveDetails = async (req, res, next) => {
   exports.saveUserPJDetails = async (req, res, next) => {
     try {
       const userDetailsPj = req.body;
+      console.log('Received user details:', userDetailsPj);
       const [existingUser] = await User.getUserDetails(userDetailsPj.user_id);
+      console.log('Existing user:', existingUser);
   
       if (existingUser.length > 0) {
         await User.updateUserPJDetails(
@@ -160,6 +162,7 @@ exports.saveDetails = async (req, res, next) => {
           userDetailsPj.tiktok,
           userDetailsPj.kwai
         );
+        console.log('User PJ details updated successfully.');
         res.status(200).json({ message: 'User PJ details updated successfully.' });
       } else {
         await User.insertUserPJDetails(
@@ -183,12 +186,15 @@ exports.saveDetails = async (req, res, next) => {
           userDetailsPj.tiktok,
           userDetailsPj.kwai
         );
+        console.log('User PJ details saved successfully.');
         res.status(201).json({ message: 'User PJ details saved successfully.' });
       }
     } catch (error) {
+      console.error('Error saving user PJ details:', error);
       next(error);
     }
   };
+  
   
   
 
