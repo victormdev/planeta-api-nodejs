@@ -133,79 +133,67 @@ exports.saveDetails = async (req, res, next) => {
   };
 
 
-exports.saveUserPJDetails = async (req, res, next) => {
-  const userDetailsPj = req.body;
-
-  try {
-    await db.beginTransaction();
-
-    // Verificar se o usuário existe na tabela `users`
-    const [existingUser] = await User.getUserDetails(userDetailsPj.user_id);
-    if (existingUser.length === 0) {
-      // Inserir o usuário na tabela `users` se não existir
-      await User.insertUser({
-        id: userDetailsPj.user_id,
-        // outros campos necessários para a tabela `users`
-      });
+  exports.saveUserPJDetails = async (req, res, next) => {
+    try {
+      const userDetailsPj = req.body;
+      console.log('Received user details:', userDetailsPj);
+      const [existingUser] = await User.getUserDetails(userDetailsPj.user_id);
+      console.log('Existing user:', existingUser);
+  
+      if (existingUser.length > 0) {
+        await User.updateUserPJDetails(
+          userDetailsPj.user_id,
+          userDetailsPj.nome_completo,
+          userDetailsPj.rg,
+          userDetailsPj.cpf,
+          userDetailsPj.estado_civil,
+          userDetailsPj.data_nascimento,
+          userDetailsPj.rua,
+          userDetailsPj.cidade,
+          userDetailsPj.estado,
+          userDetailsPj.pais,
+          userDetailsPj.cep,
+          userDetailsPj.celular_1,
+          userDetailsPj.celular_2,
+          userDetailsPj.telefone,
+          userDetailsPj.email,
+          userDetailsPj.instagram,
+          userDetailsPj.facebook,
+          userDetailsPj.tiktok,
+          userDetailsPj.kwai
+        );
+        console.log('User PJ details updated successfully.');
+        res.status(200).json({ message: 'User PJ details updated successfully.' });
+      } else {
+        await User.insertUserPJDetails(
+          userDetailsPj.user_id,
+          userDetailsPj.nome_completo,
+          userDetailsPj.rg,
+          userDetailsPj.cpf,
+          userDetailsPj.estado_civil,
+          userDetailsPj.data_nascimento,
+          userDetailsPj.rua,
+          userDetailsPj.cidade,
+          userDetailsPj.estado,
+          userDetailsPj.pais,
+          userDetailsPj.cep,
+          userDetailsPj.celular_1,
+          userDetailsPj.celular_2,
+          userDetailsPj.telefone,
+          userDetailsPj.email,
+          userDetailsPj.instagram,
+          userDetailsPj.facebook,
+          userDetailsPj.tiktok,
+          userDetailsPj.kwai
+        );
+        console.log('User PJ details saved successfully.');
+        res.status(201).json({ message: 'User PJ details saved successfully.' });
+      }
+    } catch (error) {
+      console.error('Error saving user PJ details:', error);
+      next(error);
     }
-
-    // Inserir ou atualizar na tabela `user_pj`
-    const [existingUserPJ] = await User.getUserPJDetails(userDetailsPj.user_id);
-    if (existingUserPJ.length > 0) {
-      await User.updateUserPJDetails(
-        userDetailsPj.user_id,
-        userDetailsPj.nome_completo,
-        userDetailsPj.rg,
-        userDetailsPj.cpf,
-        userDetailsPj.estado_civil,
-        userDetailsPj.data_nascimento,
-        userDetailsPj.rua,
-        userDetailsPj.cidade,
-        userDetailsPj.estado,
-        userDetailsPj.pais,
-        userDetailsPj.cep,
-        userDetailsPj.celular_1,
-        userDetailsPj.celular_2,
-        userDetailsPj.telefone,
-        userDetailsPj.email,
-        userDetailsPj.instagram,
-        userDetailsPj.facebook,
-        userDetailsPj.tiktok,
-        userDetailsPj.kwai
-      );
-      res.status(200).json({ message: 'User PJ details updated successfully.' });
-    } else {
-      await User.insertUserPJDetails(
-        userDetailsPj.user_id,
-        userDetailsPj.nome_completo,
-        userDetailsPj.rg,
-        userDetailsPj.cpf,
-        userDetailsPj.estado_civil,
-        userDetailsPj.data_nascimento,
-        userDetailsPj.rua,
-        userDetailsPj.cidade,
-        userDetailsPj.estado,
-        userDetailsPj.pais,
-        userDetailsPj.cep,
-        userDetailsPj.celular_1,
-        userDetailsPj.celular_2,
-        userDetailsPj.telefone,
-        userDetailsPj.email,
-        userDetailsPj.instagram,
-        userDetailsPj.facebook,
-        userDetailsPj.tiktok,
-        userDetailsPj.kwai
-      );
-      res.status(201).json({ message: 'User PJ details saved successfully.' });
-    }
-
-    await db.commit();
-  } catch (error) {
-    await db.rollback();
-    console.error('Error saving user PJ details:', error);
-    next(error);
-  }
-};
+  };
 
   exports.getUserDetails = (req, res, next) => {
     const userId = req.params.userId;
